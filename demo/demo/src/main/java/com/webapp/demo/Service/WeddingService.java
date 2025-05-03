@@ -16,4 +16,6 @@ public interface WeddingService {
     Optional<Wedding> updateWedding(int clientId, Wedding wedding);
 
     boolean deleteWedding(int clientId);
+
+    Optional<Wedding> findWeddingById(int id);
 }

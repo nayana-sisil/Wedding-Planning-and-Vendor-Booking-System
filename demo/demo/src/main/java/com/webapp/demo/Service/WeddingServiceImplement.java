@@ -2,10 +2,12 @@ package com.webapp.demo.Service;
 
 import com.webapp.demo.Model.Wedding;
 import com.webapp.demo.Repositorary.WeddingRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class WeddingServiceImplement implements WeddingService {
 
     final WeddingRepository weddingRepository;
@@ -47,5 +49,12 @@ public class WeddingServiceImplement implements WeddingService {
     @Override
     public boolean deleteWedding(int clientId) {
         return weddingRepository.deleteWedding(clientId);
+    }
+
+    @Override
+    public Optional<Wedding> findWeddingById(int id) {
+        return weddingRepository.getAllWeddings().stream()
+                .filter(w -> w.getClientId() == id)
+                .findFirst();
     }
 }
