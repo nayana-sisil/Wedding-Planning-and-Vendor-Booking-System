@@ -21,6 +21,9 @@ public class Wedding {
     //
 
 
+    public Wedding() {
+    }
+
     public Wedding(int clientId, String groomName, String brideName, LocalDate weddingDate, int guestCount) {
         this.clientId = clientId;
         this.groomName = groomName;

@@ -1,0 +1,7 @@
+[ {
+  "clientId" : 4,
+  "groomName" : "John",
+  "brideName" : "Jane",
+  "weddingDate" : "2025-06-15",
+  "guestCount" : 100
+} ]

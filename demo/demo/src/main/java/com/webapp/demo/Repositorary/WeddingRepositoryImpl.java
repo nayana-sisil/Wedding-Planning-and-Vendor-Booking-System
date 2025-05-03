@@ -15,11 +15,11 @@ import java.util.List;
 @Repository
 public class WeddingRepositoryImpl implements WeddingRepository {
 
-    private static final String FILE_PATH = "Weddings.txt";
+    private static final String FILE_PATH = "weddings.txt";
 
     @Override
     public List<Wedding> getAllWeddings() {
-        File file = new File(FILE_PATH);
+        File file = new File("weddings.txt");
         ObjectMapper objectMapper = configureObjectMapper();
         List<Wedding> weddings = new ArrayList<>();
 
@@ -42,7 +42,7 @@ public class WeddingRepositoryImpl implements WeddingRepository {
 
         ObjectMapper objectMapper = configureObjectMapper();
         try {
-            objectMapper.writeValue(new File(FILE_PATH), weddings);
+            objectMapper.writeValue(new File("weddings.txt"), weddings);
             return wedding;
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,7 +59,7 @@ public class WeddingRepositoryImpl implements WeddingRepository {
                 weddings.set(i, wedding);
                 ObjectMapper objectMapper = configureObjectMapper();
                 try {
-                    objectMapper.writeValue(new File(FILE_PATH), weddings);
+                    objectMapper.writeValue(new File("weddings.txt"), weddings);
                     return wedding;
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -85,7 +85,7 @@ public class WeddingRepositoryImpl implements WeddingRepository {
             weddings.remove(toRemove);
             ObjectMapper objectMapper = configureObjectMapper();
             try {
-                objectMapper.writeValue(new File(FILE_PATH), weddings);
+                objectMapper.writeValue(new File("weddings.txt"), weddings);
                 return true;
             } catch (Exception e) {
                 e.printStackTrace();

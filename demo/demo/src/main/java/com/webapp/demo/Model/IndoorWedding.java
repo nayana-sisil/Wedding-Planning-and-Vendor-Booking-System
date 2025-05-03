@@ -10,6 +10,10 @@ public class IndoorWedding extends Wedding {
 
 //
 
+
+    public IndoorWedding() {
+    }
+
     public IndoorWedding(int clientId, String groomName, String brideName, LocalDate weddingDate, int guestCount
     , Boolean acAvailable, boolean kitchenAccess) {
         super(clientId, groomName, brideName, weddingDate, guestCount);

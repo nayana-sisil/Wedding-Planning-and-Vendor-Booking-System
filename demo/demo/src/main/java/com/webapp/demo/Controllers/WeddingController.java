@@ -4,7 +4,8 @@ import com.webapp.demo.Model.IndoorWedding;
 import com.webapp.demo.Model.OutdoorWedding;
 import com.webapp.demo.Model.Wedding;
 import com.webapp.demo.Service.WeddingService;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -13,104 +14,81 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("weddings")
+@RequestMapping("/weddings")
 public class WeddingController {
 
     private final WeddingService weddingService;
-    private int nextId = 1;
-
 
     public WeddingController(WeddingService weddingService) {
         this.weddingService = weddingService;
     }
 
-    //read all weddings
+    // Get all weddings
     @GetMapping
-    public List<Wedding> getListOfWedding() {
-        return weddingService.getAllWedding();
+    public ResponseEntity<List<Wedding>> getAllWeddings() {
+        List<Wedding> weddings = weddingService.getAllWedding();
+        return new ResponseEntity<>(weddings, HttpStatus.OK);
     }
 
-    //create a new wedding
-    @PostMapping
-    public Wedding createWedding(@RequestBody Wedding wedding) {
-        wedding.setClientId(nextId++);
-        weddingService.saveWedding(wedding);
-        return wedding;
-    }
-
-    @GetMapping("/{id}")
-    public Wedding getWeddingById(@PathVariable int id) {
-        Wedding wedding = weddingService.getAllWedding().get(id);
-        if (wedding == null) {
-            throw new RuntimeException("Wedding not found with id: " + id);
+    // Get a wedding by clientId
+    @GetMapping("/{clientId}")
+    public ResponseEntity<Wedding> getWeddingById(@PathVariable int clientId) {
+        List<Wedding> weddings = weddingService.getAllWedding();
+        for (Wedding wedding : weddings) {
+            if (wedding.getClientId() == clientId) {
+                return new ResponseEntity<>(wedding, HttpStatus.OK);
+            }
         }
-        return wedding;
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    //
-
-    @PostMapping("/indoor")
-    public IndoorWedding createIndoorWedding(@RequestBody IndoorWedding wedding) {
-        wedding.setClientId(nextId++);
-        weddingService.saveWedding(wedding);
-        return wedding;
+    // Create a new wedding
+    @PostMapping
+    public ResponseEntity<Wedding> createWedding(@RequestBody Wedding wedding) {
+        Optional<Wedding> savedWedding = weddingService.saveWedding(wedding);
+        if (savedWedding.isPresent()) {
+            return new ResponseEntity<>(savedWedding.get(), HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
-    @PostMapping("/outdoor")
-    public OutdoorWedding createOutdoorWedding(@RequestBody OutdoorWedding wedding) {
-        wedding.setClientId(nextId++);
-        weddingService.saveWedding(wedding);
-        return wedding;
-    }
-
-    //
-
+    // Get weddings by type (indoor or outdoor)
     @GetMapping("/type/{type}")
-    public List<Wedding> getWeddingsByType(@PathVariable String type) {
+    public ResponseEntity<List<Wedding>> getWeddingsByType(@PathVariable String type) {
+        List<Wedding> weddings = weddingService.getAllWedding();
         List<Wedding> result = new ArrayList<>();
         boolean isIndoor = type.equalsIgnoreCase("indoor");
 
-        for (Wedding wedding : weddingService.getAllWedding()) {
+        for (Wedding wedding : weddings) {
             if (isIndoor && wedding instanceof IndoorWedding) {
                 result.add(wedding);
             } else if (!isIndoor && wedding instanceof OutdoorWedding) {
                 result.add(wedding);
             }
         }
-
-        return result;
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-
-
-    //
-
-    @PutMapping("/{Id}")
-    public Optional<Wedding> updateWedding(@RequestBody Wedding wedding, @PathVariable int id) {
-        return weddingService.updateWedding(id, wedding);
+    // Update a wedding
+    @PutMapping("/{clientId}")
+    public ResponseEntity<Wedding> updateWedding(@PathVariable int clientId, @RequestBody Wedding wedding) {
+        Optional<Wedding> updatedWedding = weddingService.updateWedding(clientId, wedding);
+        if (updatedWedding.isPresent()) {
+            return new ResponseEntity<>(updatedWedding.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
-    @DeleteMapping("/{Id}")
-    public boolean deleteWedding(@PathVariable int Id) {
-        return weddingService.deleteWedding(Id);
+    // Delete a wedding
+    @DeleteMapping("/{clientId}")
+    public ResponseEntity<String> deleteWedding(@PathVariable int clientId) {
+        boolean deleted = weddingService.deleteWedding(clientId);
+        if (deleted) {
+            return new ResponseEntity<>("Wedding deleted successfully", HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>("Wedding not found", HttpStatus.NOT_FOUND);
+        }
     }
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
