@@ -1,0 +1,51 @@
+package com.webapp.demo.Service;
+
+import com.webapp.demo.Model.Wedding;
+import com.webapp.demo.Repositorary.WeddingRepository;
+
+import java.util.List;
+import java.util.Optional;
+
+public class WeddingServiceImplement implements WeddingService {
+
+    final WeddingRepository weddingRepository;
+
+    public WeddingServiceImplement(WeddingRepository weddingRepository) {
+        this.weddingRepository = weddingRepository;
+    }
+
+
+    @Override
+    public List<Wedding> getAllWedding() {
+        return weddingRepository.getAllWeddings();
+    }
+
+    @Override
+    public Optional<Wedding> saveWedding(Wedding wedding) {
+        Wedding saveWedding = weddingRepository.saveWedding(wedding);
+
+        if (saveWedding != null) {
+            return Optional.of(saveWedding);
+        }
+        else {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Optional<Wedding> updateWedding(int clientId, Wedding wedding) {
+       Wedding updateWedding = weddingRepository.updateWedding( clientId, wedding);
+
+        if (updateWedding != null) {
+            return Optional.of(updateWedding);
+        }
+        else {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public boolean deleteWedding(int clientId) {
+        return weddingRepository.deleteWedding(clientId);
+    }
+}
