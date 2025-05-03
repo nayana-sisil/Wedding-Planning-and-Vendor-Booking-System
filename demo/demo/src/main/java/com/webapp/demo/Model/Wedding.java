@@ -1,7 +1,10 @@
 package com.webapp.demo.Model;
 
+import org.springframework.web.bind.annotation.ModelAttribute;
+
 import java.lang.annotation.Inherited;
 import java.time.LocalDate;
+
 
 public class Wedding {
 
