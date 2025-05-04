@@ -15,9 +15,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/vendors")
-
-//
-
 public class VendorController {
 
     @Autowired
@@ -28,8 +25,23 @@ public class VendorController {
         return vendorService.getAllVendors();
     }
 
+    @GetMapping("/{id}")
+    public Vendor getVendorById(@PathVariable int id) {
+        return vendorService.getVendorById(id);
+    }
+
     @PostMapping
-    public Vendor addVendor(@RequestBody Vendor vendor) {
-        return vendorService.addVendor(vendor);
+    public void addVendor(@RequestBody Vendor vendor) {
+        vendorService.addVendor(vendor);
+    }
+
+    @PutMapping("/{id}")
+    public boolean updateVendor(@PathVariable int id, @RequestBody Vendor vendor) {
+        return vendorService.updateVendor(id, vendor);
+    }
+
+    @DeleteMapping("/{id}")
+    public boolean deleteVendor(@PathVariable int id) {
+        return vendorService.deleteVendor(id);
     }
 }
