@@ -1,23 +1,34 @@
 package com.vendor.vendormanagement.model;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Entity;
+
+//
+
 
 @Entity
 public class Vendor {
 
-    private int id;
-    private String name;
-    private String serviceTyp;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public int getIdd() {
+    private String name;
+    private String serviceType;
+    private double price;
+
+    //
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getNamee() {
+    //
+
+    public String getName() {
         return name;
     }
 
@@ -25,11 +36,23 @@ public class Vendor {
         this.name = name;
     }
 
-    public String getServicetype() {
-        return serviceTyp;
+    //
+
+    public String getServiceType() {
+        return serviceType;
     }
 
-    public void setServicetype(String serviceTyp) {
-        this.serviceTyp = serviceTyp;
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
+    }
+
+    //
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }
