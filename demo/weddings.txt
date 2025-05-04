@@ -1,7 +1,13 @@
 [ {
-  "clientId" : 4,
-  "groomName" : "John",
-  "brideName" : "Jane",
-  "weddingDate" : "2025-06-15",
-  "guestCount" : 100
+  "clientId" : 1,
+  "groomName" : "nayana",
+  "brideName" : "sisil",
+  "weddingDate" : "2025-05-14",
+  "guestCount" : 400
+}, {
+  "clientId" : 8,
+  "groomName" : "ccdscsa",
+  "brideName" : "casxz",
+  "weddingDate" : "2025-05-21",
+  "guestCount" : 55
 } ]
