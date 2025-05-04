@@ -1,58 +1,39 @@
 package com.vendor.vendormanagement.model;
-import jakarta.persistence.*;
 
-
-//
-
-
-@Entity
 public class Vendor {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private int id;
     private String name;
     private String serviceType;
     private double price;
 
-    //
+    public Vendor() {}
 
-    public Long getId() {
-        return id;
-    }
+    // default constructor
 
-    public void setId(Long id) {
+    public Vendor(int id, String name, String serviceType, double price) {
         this.id = id;
-    }
-
-    //
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
         this.name = name;
-    }
-
-    //
-
-    public String getServiceType() {
-        return serviceType;
-    }
-
-    public void setServiceType(String serviceType) {
         this.serviceType = serviceType;
-    }
-
-    //
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
         this.price = price;
     }
+
+    // Getters and Setters
+
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+
+    //
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    //
+
+    public String getServiceType() { return serviceType; }
+    public void setServiceType(String serviceType) { this.serviceType = serviceType; }
+
+    //
+
+    public double getPrice() { return price; }
+    public void setPrice(double price) { this.price = price; }
 }
