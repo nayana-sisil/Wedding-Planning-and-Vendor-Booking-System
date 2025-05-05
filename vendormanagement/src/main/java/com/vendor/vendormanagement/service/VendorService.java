@@ -53,6 +53,30 @@ public class VendorService {
 
     //
 
+    public List<Vendor> searchVendorsByName(String name) {
+        List<Vendor> result = new ArrayList<>();
+        for (Vendor v : getAllVendors()) {
+            if (v.getName().toLowerCase().contains(name.toLowerCase())) {
+                result.add(v);
+            }
+        }
+        return result;
+    }
+
+    //
+
+    public List<Vendor> searchVendorsByServiceType(String serviceType) {
+        List<Vendor> result = new ArrayList<>();
+        for (Vendor v : getAllVendors()) {
+            if (v.getServiceType().toLowerCase().contains(serviceType.toLowerCase())) {
+                result.add(v);
+            }
+        }
+        return result;
+    }
+
+    //
+
     public Vendor getVendorById(int id) {
         return getAllVendors().stream()
                 .filter(v -> v.getId() == id)
@@ -84,7 +108,7 @@ public class VendorService {
     }
 
     //
-    
+
     public boolean deleteVendor(int id) {
         List<Vendor> vendors = getAllVendors();
         boolean deleted = vendors.removeIf(v -> v.getId() == id);

@@ -30,6 +30,17 @@ public class VendorController {
         return vendorService.getVendorById(id);
     }
 
+    @GetMapping("/search/name/{name}")
+    public List<Vendor> searchByName(@PathVariable String name) {
+        return vendorService.searchVendorsByName(name);
+    }
+
+    @GetMapping("/search/service/{serviceType}")
+    public List<Vendor> searchByServiceType(@PathVariable String serviceType) {
+        return vendorService.searchVendorsByServiceType(serviceType);
+    }
+
+
     @PostMapping
     public void addVendor(@RequestBody Vendor vendor) {
         vendorService.addVendor(vendor);

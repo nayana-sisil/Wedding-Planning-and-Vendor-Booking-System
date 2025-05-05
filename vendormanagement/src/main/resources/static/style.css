@@ -1,0 +1,98 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: url('https://i.ibb.co/SyDH91f/wedding-bg.jpg') no-repeat center center/cover;
+    color: #fff;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 2rem;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #fff;
+    text-shadow: 0 0 10px #ff00ff;
+}
+
+.glass-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(20px);
+    padding: 20px;
+    margin: 1rem 0;
+    border-radius: 20px;
+    box-shadow: 0 0 15px #ff00ff40;
+}
+
+input {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    background: #1115;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    box-shadow: 0 0 5px #0ff;
+}
+
+input::placeholder {
+    color: #ccc;
+}
+
+.neon-btn {
+    padding: 10px 20px;
+    background: #ff00ff;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 0 15px #ff00ff80;
+}
+
+.neon-btn:hover {
+    background: #ff00aa;
+    transform: scale(1.05);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #fff;
+    margin-top: 1rem;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #aaa3;
+}
+
+.action-btn {
+    background: #00ffff;
+    border: none;
+    border-radius: 10px;
+    padding: 6px 12px;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    color: #000;
+}
+
+.action-btn:hover {
+    background: #00dddd;
+}
+
+.action-delete {
+    background: #ff4d4d;
+}
+
+.action-delete:hover {
+    background: #ff0000;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wedding Vendor Management</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="container">
+    <h1>Wedding Vendor Management</h1>
+
+    <!-- Add Vendor -->
+    <div class="glass-box">
+        <h2>Add Vendor</h2>
+        <form id="addForm">
+            <input type="text" id="name" placeholder="Name" required />
+            <input type="text" id="serviceType" placeholder="Service Type" required />
+            <input type="number" id="rate" placeholder="Rate" required />
+            <button type="submit" class="neon-btn">Add</button>
+        </form>
+    </div>
+
+    <!-- Search Vendor -->
+    <div class="glass-box">
+        <h2>Search Vendor</h2>
+        <input type="text" id="searchInput" placeholder="Search by ID / Name / Service Type" />
+    </div>
+
+    <!-- Vendor List -->
+    <div class="glass-box">
+        <h2>Vendor List</h2>
+        <table id="vendorTable">
+            <thead>
+            <tr>
+                <th>ID</th><th>Name</th><th>Service</th><th>Rate</th><th>Actions</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
