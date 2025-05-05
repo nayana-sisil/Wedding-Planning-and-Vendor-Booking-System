@@ -1,0 +1,9 @@
+[ {
+  "clientId" : 1,
+  "groomName" : "John",
+  "brideName" : "Jane",
+  "weddingDate" : "2024-12-15",
+  "guestCount" : 150,
+  "acAvailable" : true,
+  "kitchenAccess" : true
+} ]

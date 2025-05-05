@@ -15,7 +15,7 @@ public class OutdoorWedding extends Wedding {
     }
 
     public OutdoorWedding(int clientId, String groomName, String brideName, LocalDate weddingDate, int guestCount
-    , boolean tentRequired, boolean parkingAvailable) {
+            , boolean tentRequired, boolean parkingAvailable) {
         super(clientId, groomName, brideName, weddingDate, guestCount);
         this.tentRequired = tentRequired;
         this.parkingAvailable = parkingAvailable;

@@ -36,7 +36,7 @@ public class WeddingServiceImplement implements WeddingService {
 
     @Override
     public Optional<Wedding> updateWedding(int clientId, Wedding wedding) {
-       Wedding updateWedding = weddingRepository.updateWedding( clientId, wedding);
+        Wedding updateWedding = weddingRepository.updateWedding( clientId, wedding);
 
         if (updateWedding != null) {
             return Optional.of(updateWedding);
