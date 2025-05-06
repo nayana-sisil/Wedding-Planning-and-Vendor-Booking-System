@@ -1,5 +1,2 @@
-0,kugiuykg,uyjfhyjvc,0.0
-0,ujbkubj,jubhbujk,0.0
-0,ujkoihnuijk,hb,uklhnjk,hb,0.0
-0,ukjhjkl,mh,lhjnujlk,0.0
-0,yig,ukhg,0.0
+1,izzu,Catering,100000.0
+0,izzu,Photography,100000.0

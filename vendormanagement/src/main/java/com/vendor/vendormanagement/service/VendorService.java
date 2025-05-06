@@ -18,14 +18,25 @@ public class VendorService {
     private final String FILE_PATH = "vendors.txt";
 
     //
+    // ✅ Updated to return boolean
 
-    public void addVendor(Vendor vendor) {
+    public boolean addVendor(Vendor newVendor) {
+        List<Vendor> existingVendors = getAllVendors();
+
+        for (Vendor v : existingVendors) {
+            if (v.getId() == newVendor.getId()) {
+                return false; // ID already exists
+            }
+        }
+
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
-            writer.write(vendor.getId() + "," + vendor.getName() + "," +
-                    vendor.getServiceType() + "," + vendor.getPrice());
+            writer.write(newVendor.getId() + "," + newVendor.getName() + "," +
+                    newVendor.getServiceType() + "," + newVendor.getPrice());
             writer.newLine();
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
     }
 
@@ -37,13 +48,16 @@ public class VendorService {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                Vendor vendor = new Vendor(
-                        Integer.parseInt(parts[0]),
-                        parts[1],
-                        parts[2],
-                        Double.parseDouble(parts[3])
-                );
-                vendors.add(vendor);
+                if (parts.length != 4) continue;
+                try {
+                    int id = Integer.parseInt(parts[0].trim());
+                    String name = parts[1].trim();
+                    String service = parts[2].trim();
+                    double price = Double.parseDouble(parts[3].trim());
+                    vendors.add(new Vendor(id, name, service, price));
+                } catch (NumberFormatException e) {
+                    System.out.println("Skipping invalid line: " + line);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -89,6 +103,7 @@ public class VendorService {
     public boolean updateVendor(int id, Vendor updatedVendor) {
         List<Vendor> vendors = getAllVendors();
         boolean updated = false;
+
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (Vendor v : vendors) {
                 if (v.getId() == id) {
@@ -112,6 +127,7 @@ public class VendorService {
     public boolean deleteVendor(int id) {
         List<Vendor> vendors = getAllVendors();
         boolean deleted = vendors.removeIf(v -> v.getId() == id);
+
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (Vendor v : vendors) {
                 writer.write(v.getId() + "," + v.getName() + "," +

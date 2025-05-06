@@ -1,98 +1,174 @@
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: url('https://i.ibb.co/SyDH91f/wedding-bg.jpg') no-repeat center center/cover;
+    background: linear-gradient(135deg, #1f1c2c, #928dab);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: #fff;
+    overflow: hidden;
 }
 
 .container {
-    max-width: 900px;
-    margin: auto;
-    padding: 2rem;
-}
-
-h1, h2 {
-    text-align: center;
-    color: #fff;
-    text-shadow: 0 0 10px #ff00ff;
-}
-
-.glass-box {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(20px);
-    padding: 20px;
-    margin: 1rem 0;
+    padding: 30px;
     border-radius: 20px;
-    box-shadow: 0 0 15px #ff00ff40;
+    width: 95%;
+    max-width: 600px;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: fadeIn 1s ease-in-out;
 }
 
-input {
-    display: block;
+.glass {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    text-shadow: 0 0 5px #fff;
+}
+
+form input,
+form select {
     width: 100%;
-    margin: 10px 0;
     padding: 10px;
-    background: #1115;
-    color: #fff;
+    margin-bottom: 15px;
     border: none;
     border-radius: 10px;
     outline: none;
-    box-shadow: 0 0 5px #0ff;
-}
-
-input::placeholder {
-    color: #ccc;
-}
-
-.neon-btn {
-    padding: 10px 20px;
-    background: #ff00ff;
-    border: none;
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.15);
     color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s ease;
-    box-shadow: 0 0 15px #ff00ff80;
+    transition: 0.3s;
 }
 
-.neon-btn:hover {
-    background: #ff00aa;
+form input:focus,
+form select:focus {
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 10px #00f0ff;
+}
+
+form select option {
+    color: #000;
+    background: #fff;
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+button {
+    flex: 1 1 30%;
+    background: #00f0ff;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px #00f0ff;
+}
+
+button:hover {
+    background: #00c0d4;
+    box-shadow: 0 0 20px #00f0ff, 0 0 30px #00e6ff;
     transform: scale(1.05);
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    color: #fff;
-    margin-top: 1rem;
-}
-
-th, td {
-    padding: 12px;
-    text-align: center;
-    border-bottom: 1px solid #aaa3;
-}
-
-.action-btn {
-    background: #00ffff;
-    border: none;
+#vendorList {
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 15px;
     border-radius: 10px;
-    padding: 6px 12px;
-    margin: 0 5px;
+    max-height: 250px;
+    overflow-y: auto;
+    color: #fff;
+}
+
+/* Alert */
+.alert {
+    background: #4CAF50;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 15px;
+    border-radius: 10px;
+    z-index: 1000;
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: opacity 0.5s ease-in-out;
+    animation: fadeOut 3s forwards;
+}
+
+.alert.hidden {
+    opacity: 0;
+    display: none;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    backdrop-filter: blur(10px);
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: linear-gradient(145deg, #2e2c3a, #3b3a4d);
+    color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px #00f0ff;
+}
+
+.modal-content input,
+.modal-content select {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: white;
+}
+
+.modal-content select option {
+    color: black;
+    background: white;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 30px;
+    color: white;
     cursor: pointer;
-    transition: 0.3s;
-    color: #000;
 }
 
-.action-btn:hover {
-    background: #00dddd;
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
 }
 
-.action-delete {
-    background: #ff4d4d;
-}
-
-.action-delete:hover {
-    background: #ff0000;
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; top: 0; }
 }
