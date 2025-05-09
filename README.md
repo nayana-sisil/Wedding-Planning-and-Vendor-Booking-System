@@ -492,3 +492,155 @@ document.addEventListener('DOMContentLoaded', function() {
     
     showSection(homeSection);
 });
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Planner Feedback</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<header>
+    <div class="container">
+        <h1><i class="fas fa-heart"></i> Wedding Feedback</h1>
+        <nav>
+            <ul>
+                <li><a href="#" class="active" id="home-link">Home</a></li>
+                <li><a href="#" id="add-review-link">Add Review</a></li>
+                <li><a href="#" id="view-reviews-link">View Reviews</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <!-- Home Section -->
+    <section id="home-section">
+        <div class="hero">
+            <h2>Share Your Wedding Experience</h2>
+            <p>Help other couples by sharing feedback about wedding vendors</p>
+            <button id="get-started-btn" class="btn-primary">Get Started</button>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <i class="fas fa-star"></i>
+                <h3>4.8</h3>
+                <p>Average Rating</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-comments"></i>
+                <h3>127</h3>
+                <p>Reviews</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-building"></i>
+                <h3>42</h3>
+                <p>Vendors</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add Review Section -->
+    <section id="add-review-section" class="hidden">
+        <h2><i class="fas fa-pen"></i> Add a Review</h2>
+        <form id="review-form">
+            <div class="form-group">
+                <label for="vendor">Vendor</label>
+                <select id="vendor" required>
+                    <option value="">Select a vendor</option>
+                    <option value="VEN001">Wedding Venues</option>
+                    <option value="PHO002">Photographers</option>
+                    <option value="CAT003">Catering Services</option>
+                    <option value="FLO004">Florists</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" required>
+                    <option value="">Select a category</option>
+                    <option value="Venue">Venue</option>
+                    <option value="Photography">Photography</option>
+                    <option value="Catering">Catering</option>
+                    <option value="Florist">Florist</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Your Rating</label>
+                <div class="rating-stars">
+                    <i class="far fa-star" data-rating="1"></i>
+                    <i class="far fa-star" data-rating="2"></i>
+                    <i class="far fa-star" data-rating="3"></i>
+                    <i class="far fa-star" data-rating="4"></i>
+                    <i class="far fa-star" data-rating="5"></i>
+                </div>
+                <input type="hidden" id="rating" name="rating" required>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Your Email</label>
+                <input type="email" id="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="comment">Your Review</label>
+                <textarea id="comment" rows="5" required></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary">Submit Review</button>
+        </form>
+    </section>
+
+    <!-- View Reviews Section -->
+    <section id="view-reviews-section" class="hidden">
+        <h2><i class="fas fa-list"></i> Vendor Reviews</h2>
+
+        <div class="filter-controls">
+            <div class="form-group">
+                <label for="filter-vendor">Filter by Vendor</label>
+                <select id="filter-vendor">
+                    <option value="">All Vendors</option>
+                    <option value="VEN001">Wedding Venues</option>
+                    <option value="PHO002">Photographers</option>
+                    <option value="CAT003">Catering Services</option>
+                    <option value="FLO004">Florists</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="filter-category">Filter by Category</label>
+                <select id="filter-category">
+                    <option value="">All Categories</option>
+                    <option value="Venue">Venue</option>
+                    <option value="Photography">Photography</option>
+                    <option value="Catering">Catering</option>
+                    <option value="Florist">Florist</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="reviews-container">
+            <!-- Reviews will be loaded here -->
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2023 Wedding Planner Feedback System</p>
+    </div>
+</footer>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
