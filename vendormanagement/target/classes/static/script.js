@@ -1,195 +1,120 @@
+
+// ✅ Utility Functions
 function showAlert(message, success = true) {
-    const alertBox = document.getElementById('alertBox');
+    const alertBox = document.getElementById("alertBox");
     alertBox.textContent = message;
-    alertBox.style.background = success ? '#4CAF50' : '#ff4d4d';
-    alertBox.classList.remove('hidden');
-    setTimeout(() => {
-        alertBox.classList.add('hidden');
-    }, 3000);
+    alertBox.style.backgroundColor = success ? "#4CAF50" : "#f44336";
+    alertBox.classList.remove("hidden");
+    setTimeout(() => alertBox.classList.add("hidden"), 3000);
 }
 
-//
+function openModal(type) {
+    const modal = document.getElementById("modal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalBody = document.getElementById("modalBody");
+    modal.classList.remove("hidden");
+
+    modalBody.innerHTML = "";
+
+    if (type === "edit") {
+        modalTitle.textContent = "Edit Vendor";
+        modalBody.innerHTML = `
+            <input type="number" id="editId" placeholder="Vendor ID to Edit (positive only)" min="0" required />
+            <input type="text" id="editName" placeholder="New Name (letters only)" required />
+            <select id="editType" required>
+                <option value="">Select Service Type</option>
+                <option value="Catering">Catering</option>
+                <option value="Photography">Photography</option>
+                <option value="Music">Music</option>
+            </select>
+            <input type="number" id="editRate" placeholder="New Rate (2500, 5000...)" min="2500" step="2500" required />
+            <input type="text" id="editContact" placeholder="New Contact (phone or email)" required />
+            <button onclick="editVendor()">Update</button>
+        `;
+    } else if (type === "delete") {
+        modalTitle.textContent = "Delete Vendor";
+        modalBody.innerHTML = `
+            <input type="number" id="deleteId" placeholder="Vendor ID to Delete" />
+            <button onclick="deleteVendor()">Delete</button>
+        `;
+    } else if (type === "search") {
+        modalTitle.textContent = "Search Vendor";
+        modalBody.innerHTML = `
+            <select id="searchField">
+                <option value="id">ID</option>
+                <option value="name">Name</option>
+                <option value="serviceType">Service Type</option>
+            </select>
+            <input type="text" id="searchKeyword" placeholder="Enter value to search" />
+            <button onclick="searchVendor()">Search</button>
+        `;
+    }
+}
 
 function closeModal() {
-    document.getElementById('modal').classList.add('hidden');
-    document.getElementById('modalBody').innerHTML = '';
+    document.getElementById("modal").classList.add("hidden");
 }
 
-//
-
-function openModal(action) {
-    const modal = document.getElementById('modal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalBody = document.getElementById('modalBody');
-    modal.classList.remove('hidden');
-
-    if (action === 'edit') {
-        modalTitle.innerText = 'Edit Vendor';
-        modalBody.innerHTML = `
-            <input type="number" id="editId" placeholder="Vendor ID" required />
-            <input type="text" id="editName" placeholder="New Name" />
-            <input type="text" id="editContact" placeholder="New Contact Info" />
-            <input type="number" id="editRate" placeholder="New Rate (Rs)" min="5000" />
-            <button onclick="submitEdit()">Save Changes</button>
-        `;
-    } else if (action === 'delete') {
-        modalTitle.innerText = 'Delete Vendor';
-        modalBody.innerHTML = `
-            <input type="number" id="deleteId" placeholder="Vendor ID to delete" />
-            <button onclick="submitDelete()">Delete</button>
-        `;
-    } else if (action === 'search') {
-        modalTitle.innerText = 'Search Vendor';
-        modalBody.innerHTML = `
-            <select id="searchBy">
-                <option value="id">Search by ID</option>
-                <option value="name">Search by Name</option>
-                <option value="type">Search by Type</option>
-            </select>
-            <input type="text" id="searchValue" placeholder="Enter search value" />
-            <button onclick="submitSearch()">Search</button>
-            <div id="searchResult"></div>
-        `;
-    }
+// ✅ Validations
+function validateVendor(vendor) {
+    if (isNaN(vendor.id) || vendor.id < 0) return "Vendor ID must be a positive number";
+    if (!/^[a-zA-Z ]+$/.test(vendor.name)) return "Name must be letters only";
+    if (![2500, 5000, 7500, 10000].includes(vendor.price)) return "Rate must be 2500, 5000, 7500, or 10000";
+    if (!/^\d{10}$/.test(vendor.contact) && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(vendor.contact))
+        return "Contact must be valid phone or email";
+    return null;
 }
 
-//
-
+// ✅ Add Vendor
 function addVendor() {
-    const id = document.getElementById("id").value.trim();
-    const name = document.getElementById("name").value.trim();
-    const type = document.getElementById("type").value;
-    const rate = parseFloat(document.getElementById("rate").value);
-    const contact = document.getElementById("contact").value.trim();
+    const vendor = {
+        id: parseInt(document.getElementById("id").value),
+        name: document.getElementById("name").value,
+        serviceType: document.getElementById("type").value,
+        price: parseFloat(document.getElementById("rate").value),
+        contact: document.getElementById("contact").value
+    };
 
-    if (!id || !name || !type || !rate || !contact || rate < 5000) {
-        showAlert("Please fill all fields correctly (Rate min Rs.5000)", false);
-        return;
-    }
+    const error = validateVendor(vendor);
+    if (error) return showAlert(error, false);
 
-    fetch("http://localhost:8080/vendors")
-        .then(res => res.json())
-        .then(data => {
-            const exists = data.some(v => v.id == id);
-            if (exists) {
-                showAlert("Vendor already exists!", false);
-            } else {
-                fetch("http://localhost:8080/vendors", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ id, name, type, rate, contact })
-                }).then(res => {
-                    if (res.ok) {
-                        showAlert("Vendor successfully added!");
-                        document.getElementById("vendorForm").reset();
-                    } else {
-                        showAlert("Failed to add vendor", false);
-                    }
-                });
-            }
-        });
-}
-
-//
-
-function submitEdit() {
-    const id = document.getElementById("editId").value.trim();
-    const name = document.getElementById("editName").value.trim();
-    const rate = document.getElementById("editRate").value.trim();
-    const contact = document.getElementById("editContact").value.trim();
-
-    fetch(`http://localhost:8080/vendors/${id}`)
-        .then(res => {
-            if (!res.ok) throw new Error("Vendor not found");
-            return res.json();
+    fetch("http://localhost:8080/api/vendors", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(vendor)
+    })
+        .then(res => res.text())
+        .then(msg => {
+            showAlert(msg, msg.includes("successfully"));
+            document.getElementById("vendorForm").reset();
+            listVendors();
         })
-        .then(vendor => {
-            vendor.name = name || vendor.name;
-            vendor.rate = rate ? parseFloat(rate) : vendor.rate;
-            vendor.contact = contact || vendor.contact;
+        .catch(err => showAlert("Error adding vendor", false));
+}
 
-            if (vendor.rate < 5000) {
-                showAlert("Rate must be Rs.5000 or more", false);
-                return;
-            }
+// ✅ Edit Vendor
+function editVendor() {
+    const vendor = {
+        id: parseInt(document.getElementById("editId").value),
+        name: document.getElementById("editName").value,
+        serviceType: document.getElementById("editType").value,
+        price: parseFloat(document.getElementById("editRate").value),
+        contact: document.getElementById("editContact").value
+    };
 
-            return fetch("http://localhost:8080/vendors", {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(vendor)
-            });
+    const error = validateVendor(vendor);
+    if (error) return showAlert(error, false);
+
+    fetch("http://localhost:8080/api/vendors/" + vendor.id, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(vendor)
+    })
+        .then(res => res.text())
+        .then(msg => {
+            showAlert(msg, msg.includes("successfully"));
+            closeModal();
+            listVendors();
         })
-        .then(response => {
-            if (response.ok) {
-                showAlert("Vendor updated!");
-                closeModal();
-            } else {
-                showAlert("Update failed", false);
-            }
-        })
-        .catch(() => showAlert("Vendor not found", false));
-}
-
-//
-
-function submitDelete() {
-    const id = document.getElementById("deleteId").value.trim();
-    fetch(`http://localhost:8080/vendors/${id}`, { method: "DELETE" })
-        .then(res => {
-            if (res.ok) {
-                showAlert("Vendor deleted!");
-                closeModal();
-            } else {
-                showAlert("Vendor not found", false);
-            }
-        });
-}
-
-//
-
-function submitSearch() {
-    const searchBy = document.getElementById("searchBy").value;
-    const searchValue = document.getElementById("searchValue").value.trim().toLowerCase();
-
-    if (!searchValue) {
-        showAlert("Enter a value to search!", false);
-        return;
-    }
-
-    fetch("http://localhost:8080/vendors")
-        .then(res => res.json())
-        .then(data => {
-            let results = [];
-
-            if (searchBy === "id") {
-                results = data.filter(v => v.id.toString() === searchValue);
-            } else if (searchBy === "name") {
-                results = data.filter(v => v.name.toLowerCase().includes(searchValue));
-            } else if (searchBy === "type") {
-                results = data.filter(v => v.type.toLowerCase().includes(searchValue));
-            }
-
-            const resultDiv = document.getElementById("searchResult");
-            if (results.length > 0) {
-                resultDiv.innerHTML = results.map(v => `
-                    <p><strong>ID:</strong> ${v.id} | <strong>Name:</strong> ${v.name} | <strong>Contact:</strong> ${v.contact} | <strong>Rate:</strong> Rs.${v.rate} | <strong>Type:</strong> ${v.type}</p>
-                `).join('');
-            } else {
-                resultDiv.innerHTML = `<p>No matching vendor found.</p>`;
-            }
-        });
-}
-
-//
-
-function listVendors() {
-    fetch("http://localhost:8080/vendors")
-        .then(res => res.json())
-        .then(data => {
-            const listDiv = document.getElementById("vendorList");
-            listDiv.innerHTML = "<h3>Vendor List</h3>";
-            data.forEach(v => {
-                listDiv.innerHTML += `<p>🧾 ${v.id} - ${v.name} - ${v.contact} - Rs.${v.rate} - ${v.type}</p>`;
-            });
-        });
+        .catch(err => showAlert("Error editing vendor", false));
 }
