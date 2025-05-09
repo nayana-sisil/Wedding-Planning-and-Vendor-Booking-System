@@ -378,7 +378,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Form Submission
+    
     reviewForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
@@ -420,7 +420,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Load and Display Reviews
+   
     function loadReviews() {
         fetch('/wedding-feedback/api/reviews')
             .then(response => response.json())
@@ -441,7 +441,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         let filteredReviews = [...reviews];
 
-        // Apply filters
+       
         if (filterVendor.value) {
             filteredReviews = filteredReviews.filter(review => review.vendorId === filterVendor.value);
         }
@@ -458,7 +458,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         filteredReviews.sort((a, b) => new Date(b.reviewDate) - new Date(a.reviewDate));
 
-        // Display reviews
+        
         reviewsContainer.innerHTML = '';
         filteredReviews.forEach(review => {
             const reviewDate = new Date(review.reviewDate).toLocaleDateString('en-US', {
