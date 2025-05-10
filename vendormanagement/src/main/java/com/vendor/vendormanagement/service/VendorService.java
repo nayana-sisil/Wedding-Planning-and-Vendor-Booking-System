@@ -1,15 +1,23 @@
 package com.vendor.vendormanagement.service;
 
+//
+
 import com.vendor.vendormanagement.model.Vendor;
 import org.springframework.stereotype.Service;
+
+//
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+//
+
 @Service
 public class VendorService {
     private final String FILE_PATH = "vendors.txt";
+
+    //
 
     public boolean addVendor(Vendor newVendor) {
         List<Vendor> existingVendors = getAllVendors();
@@ -30,6 +38,8 @@ public class VendorService {
             return false;
         }
     }
+
+    //
 
     public List<Vendor> getAllVendors() {
         List<Vendor> vendors = new ArrayList<>();
@@ -55,6 +65,8 @@ public class VendorService {
         return vendors;
     }
 
+    //
+
     public List<Vendor> searchVendorsByName(String name) {
         List<Vendor> result = new ArrayList<>();
         for (Vendor v : getAllVendors()) {
@@ -64,6 +76,8 @@ public class VendorService {
         }
         return result;
     }
+
+    //
 
     public List<Vendor> searchVendorsByServiceType(String serviceType) {
         List<Vendor> result = new ArrayList<>();
@@ -75,12 +89,16 @@ public class VendorService {
         return result;
     }
 
+    //
+
     public Vendor getVendorById(int id) {
         return getAllVendors().stream()
                 .filter(v -> v.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
+
+    //
 
     public boolean updateVendor(int id, Vendor updatedVendor) {
         List<Vendor> vendors = getAllVendors();
@@ -104,6 +122,8 @@ public class VendorService {
         }
         return updated;
     }
+
+    //
 
     public boolean deleteVendor(int id) {
         List<Vendor> vendors = getAllVendors();

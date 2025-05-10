@@ -1,5 +1,3 @@
-
-// ✅ Utility Functions
 function showAlert(message, success = true) {
     const alertBox = document.getElementById("alertBox");
     alertBox.textContent = message;
@@ -7,6 +5,8 @@ function showAlert(message, success = true) {
     alertBox.classList.remove("hidden");
     setTimeout(() => alertBox.classList.add("hidden"), 3000);
 }
+
+//
 
 function openModal(type) {
     const modal = document.getElementById("modal");
@@ -51,21 +51,25 @@ function openModal(type) {
     }
 }
 
+//
+
 function closeModal() {
     document.getElementById("modal").classList.add("hidden");
 }
 
-// ✅ Validations
-function validateVendor(vendor) {
-    if (isNaN(vendor.id) || vendor.id < 0) return "Vendor ID must be a positive number";
-    if (!/^[a-zA-Z ]+$/.test(vendor.name)) return "Name must be letters only";
-    if (![2500, 5000, 7500, 10000].includes(vendor.price)) return "Rate must be 2500, 5000, 7500, or 10000";
-    if (!/^\d{10}$/.test(vendor.contact) && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(vendor.contact))
-        return "Contact must be valid phone or email";
+//
+
+function validateVendor(v) {
+    if (v.id < 0) return "ID must be positive";
+    if (!/^[a-zA-Z ]+$/.test(v.name)) return "Name must be letters only";
+    if (![2500, 5000, 7500, 10000].includes(v.price)) return "Rate must be 2500, 5000, 7500 or 10000";
+    if (!/^\d{10}$/.test(v.contact) && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.contact))
+        return "Contact must be phone or email";
     return null;
 }
 
-// ✅ Add Vendor
+//
+
 function addVendor() {
     const vendor = {
         id: parseInt(document.getElementById("id").value),
@@ -89,10 +93,11 @@ function addVendor() {
             document.getElementById("vendorForm").reset();
             listVendors();
         })
-        .catch(err => showAlert("Error adding vendor", false));
+        .catch(() => showAlert("Error adding vendor", false));
 }
 
-// ✅ Edit Vendor
+//
+
 function editVendor() {
     const vendor = {
         id: parseInt(document.getElementById("editId").value),
@@ -116,5 +121,80 @@ function editVendor() {
             closeModal();
             listVendors();
         })
-        .catch(err => showAlert("Error editing vendor", false));
+        .catch(() => showAlert("Error editing vendor", false));
+}
+
+//
+
+function deleteVendor() {
+    const id = parseInt(document.getElementById("deleteId").value);
+
+    fetch("http://localhost:8080/api/vendors/" + id, {
+        method: "DELETE"
+    })
+        .then(res => res.text())
+        .then(msg => {
+            showAlert(msg, msg.includes("successfully"));
+            closeModal();
+            listVendors();
+        })
+        .catch(() => showAlert("Error deleting vendor", false));
+}
+
+//
+
+function searchVendor() {
+    const field = document.getElementById("searchField").value;
+    const keyword = document.getElementById("searchKeyword").value.trim().toLowerCase();
+
+    fetch("http://localhost:8080/api/vendors")
+        .then(res => res.json())
+        .then(vendors => {
+            let results = [];
+            if (field === "id") results = vendors.filter(v => v.id.toString() === keyword);
+            else if (field === "name") results = vendors.filter(v => v.name.toLowerCase().includes(keyword));
+            else if (field === "serviceType") results = vendors.filter(v => v.serviceType.toLowerCase().includes(keyword));
+            displayVendors(results);
+            closeModal();
+        })
+        .catch(() => showAlert("Search failed", false));
+}
+
+//
+
+function listVendors() {
+    fetch("http://localhost:8080/api/vendors")
+        .then(res => res.json())
+        .then(vendors => displayVendors(vendors))
+        .catch(() => showAlert("Failed to load vendors", false));
+}
+
+//
+
+function displayVendors(vendors) {
+    const list = document.getElementById("vendorList");
+    list.innerHTML = "";
+
+    if (vendors.length === 0) {
+        list.innerHTML = "<p>No vendors found.</p>";
+        return;
+    }
+
+    vendors.forEach(v => {
+        const card = document.createElement("div");
+        card.innerHTML = `
+            <strong>ID:</strong> ${v.id}<br>
+            <strong>Name:</strong> ${v.name}<br>
+            <strong>Service:</strong> ${v.serviceType}<br>
+            <strong>Price:</strong> Rs. ${v.price}<br>
+            <strong>Contact:</strong> ${v.contact}
+            <hr>
+        `;
+        card.style.padding = "10px";
+        card.style.marginBottom = "10px";
+        card.style.background = "rgba(255,255,255,0.1)";
+        card.style.borderRadius = "10px";
+        card.style.color = "#fff";
+        list.appendChild(card);
+    });
 }
