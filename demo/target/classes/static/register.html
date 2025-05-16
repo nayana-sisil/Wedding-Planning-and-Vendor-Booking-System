@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Wedding Planner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .btn {
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-f8e1e9 to-fef9f3">
+<header class="bg-white bg-opacity-90 shadow-md text-center py-6 relative">
+    <div class="floral-decor floral-decor-left"></div>
+    <h1 class="text-4xl font-playfair text-c06c84">Wedding Planner</h1>
+    <p class="text-lg text-6d8299">Craft Your Dream Day with Love</p>
+    <div class="floral-decor floral-decor-right"></div>
+</header>
+
+<main class="flex justify-center items-center py-10 flex-col gap-8">
+    <section class="bg-white bg-opacity-95 p-8 rounded-2xl shadow-xl max-w-md w-full border border-e6dede">
+        <h2 class="text-2xl font-playfair text-c06c84 mb-6 text-center">Register New User</h2>
+        <form id="registerForm" class="space-y-4">
+            <div>
+                <label for="userType" class="block text-4a3c31 mb-2">User Type</label>
+                <select id="userType" name="userType" class="w-full p-2 border border-e6dede rounded-lg bg-fdfbfb focus:border-c06c84" required>
+                    <option value="client">Client</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div>
+                <label for="username" class="block text-4a3c31 mb-2">Username</label>
+                <input type="text" id="username" name="username" class="w-full p-2 border border-e6dede rounded-lg bg-fdfbfb focus:border-c06c84" required>
+            </div>
+            <div>
+                <label for="email" class="block text-4a3c31 mb-2">Email</label>
+                <input type="email" id="email" name="email" class="w-full p-2 border border-e6dede rounded-lg bg-fdfbfb focus:border-c06c84" required>
+            </div>
+            <div>
+                <label for="password" class="block text-4a3c31 mb-2">Password</label>
+                <input type="password" id="password" name="password" class="w-full p-2 border border-e6dede rounded-lg bg-fdfbfb focus:border-c06c84" required>
+            </div>
+            <div id="clientFields" class="space-y-4">
+                <div>
+                    <label for="weddingDate" class="block text-4a3c31 mb-2">Wedding Date</label>
+                    <input type="date" id="weddingDate" name="weddingDate" class="w-full p-2 border border-e6dede rounded-lg bg-fdfbfb focus:border-c06c84">
+                </div>
+                <div>
+                    <label for="partnerName" class="block text-4a3c31 mb-2">Partner's Name</label>
+                    <input type="text" id="partnerName" name="partnerName" class="w-full p-2 border border-e6dede rounded-lg bg-fdfbfb focus:border-c06c84">
+                </div>
+            </div>
+            <div id="adminFields" class="space-y-4 hidden">
+                <div>
+                    <label for="adminLevel" class="block text-4a3c31 mb-2">Admin Level</label>
+                    <input type="text" id="adminLevel" name="adminLevel" class="w-full p-2 border border-e6dede rounded-lg bg-fdfbfb focus:border-c06c84">
+                </div>
+            </div>
+
+            <!-- Primary Register Button - Now clearly visible -->
+            <div class="pt-4">
+                <button type="submit" id="registerSubmitBtn" class="w-full btn bg-c06c84 text-white px-6 py-3 rounded-lg hover:bg-a54b67 transition text-lg font-medium">
+                    Register Now
+                </button>
+            </div>
+
+        </form>
+
+        <div class="mt-4 text-center">
+            <a href="index.html" class="text-6d8299 hover:text-5a6d82 transition">
+                Already have an account? Login here
+            </a>
+        </div>
+
+    </section>
+
+    <section id="userDetailsSection" class="bg-white bg-opacity-95 p-8 rounded-2xl shadow-xl max-w-2xl w-full border border-e6dede hidden">
+        <h2 class="text-2xl font-playfair text-c06c84 mb-6 text-center">Registration Successful!</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full border-none">
+                <tbody id="userDetails" class="[&>tr]:border-none [&>tr>td]:py-3 [&>tr>td:first-child]:text-right [&>tr>td:first-child]:pr-6 [&>tr>td:first-child]:font-medium [&>tr>td:first-child]:text-6d8299 [&>tr>td:last-child]:text-4a3c31">
+                <!-- Will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <div class="flex gap-4 mt-8">
+            <button id="editUserBtn" class="btn bg-c06c84 text-white px-4 py-2 rounded-lg hover:bg-a54b67 transition flex-1">
+                Edit Profile
+            </button>
+            <button id="newRegistrationBtn" class="btn bg-6d8299 text-white px-4 py-2 rounded-lg hover:bg-5a6d82 transition flex-1">
+                New Registration
+            </button>
+        </div>
+    </section>
+</main>
+
+<footer class="bg-white bg-opacity-90 shadow-inner text-center py-4 text-6d8299 text-sm">
+    <p>Template by Wedding Planner Team | Licensed under CC BY 4.0</p>
+</footer>
+
+<script>
+    // Toggle between client and admin fields
+    document.getElementById('userType').addEventListener('change', function() {
+        const isClient = this.value === 'client';
+        document.getElementById('clientFields').classList.toggle('hidden', !isClient);
+        document.getElementById('adminFields').classList.toggle('hidden', isClient);
+    });
+
+    // Handle form submission
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Get form values
+        const userType = document.getElementById('userType').value;
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const weddingDate = document.getElementById('weddingDate').value;
+        const partnerName = document.getElementById('partnerName').value;
+        const adminLevel = document.getElementById('adminLevel').value;
+
+        // Create table rows for user details
+        let detailsHTML = `
+                <tr><td>Account Type</td><td>${userType.charAt(0).toUpperCase() + userType.slice(1)}</td></tr>
+                <tr><td>Username</td><td>${username}</td></tr>
+                <tr><td>Email</td><td>${email}</td></tr>
+            `;
+
+        if (userType === 'client') {
+            detailsHTML += `
+                    <tr><td>Wedding Date</td><td>${weddingDate || 'Not specified'}</td></tr>
+                    <tr><td>Partner's Name</td><td>${partnerName || 'Not specified'}</td></tr>
+                `;
+        } else {
+            detailsHTML += `
+                    <tr><td>Admin Level</td><td>${adminLevel || 'Not specified'}</td></tr>
+                `;
+        }
+
+        // Populate details section
+        document.getElementById('userDetails').innerHTML = detailsHTML;
+
+        // Show details section and hide form
+        document.getElementById('registerForm').closest('section').classList.add('hidden');
+        document.getElementById('userDetailsSection').classList.remove('hidden');
+    });
+
+    // New Registration button
+    document.getElementById('newRegistrationBtn').addEventListener('click', function() {
+        document.getElementById('userDetailsSection').classList.add('hidden');
+        const formSection = document.getElementById('registerForm').closest('section');
+        formSection.classList.remove('hidden');
+        formSection.scrollIntoView({ behavior: 'smooth' });
+        document.getElementById('registerForm').reset();
+    });
+</script>
+
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/users.js"></script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details - Wedding Planner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gradient-to-br from-f8e1e9 to-fef9f3">
+<header class="bg-white bg-opacity-90 shadow-md text-center py-6 relative">
+    <div class="floral-decor floral-decor-left"></div>
+    <h1 class="text-4xl font-playfair text-c06c84">Wedding Planner</h1>
+    <p class="text-lg text-6d8299">Craft Your Dream Day with Love</p>
+    <div class="floral-decor floral-decor-right"></div>
+</header>
+
+<main class="flex justify-center items-center min-h-screen py-10">
+    <section class="bg-white bg-opacity-95 p-8 rounded-2xl shadow-xl max-w-2xl w-full border border-e6dede">
+        <h2 class="text-2xl font-playfair text-c06c84 mb-6 text-center">User Details</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full border-none">
+                <tbody id="userDetails" class="[&>tr]:border-none [&>tr>td]:py-2 [&>tr>td:first-child]:text-right [&>tr>td:first-child]:pr-4 [&>tr>td:first-child]:font-medium [&>tr>td:first-child]:text-6d8299 [&>tr>td:last-child]:text-4a3c31">
+                <!-- Will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <div class="flex gap-4 mt-6">
+            <button id="editUserBtn" class="btn bg-c06c84 text-white px-4 py-2 rounded-lg hover:bg-a54b67 transition flex-1">
+                Edit User
+            </button>
+            <button id="deleteUserBtn" class="btn bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition flex-1">
+                Delete User
+            </button>
+            <a href="register.html" class="btn bg-6d8299 text-white px-4 py-2 rounded-lg hover:bg-5a6d82 transition flex-1 text-center">
+                Back to Registration
+            </a>
+        </div>
+    </section>
+</main>
+
+<footer class="bg-white bg-opacity-90 shadow-inner text-center py-4 text-6d8299 text-sm">
+    <p>Template by Wedding Planner Team | Licensed under CC BY 4.0</p>
+</footer>
+
+<script src="js/api.js"></script>
+<script>
+    async function loadUserDetails() {
+        const params = new URLSearchParams(window.location.search);
+        const userId = params.get('id');
+        if (!userId) {
+            document.getElementById('userDetails').innerHTML = '<tr><td colspan="2">No user ID provided in URL</td></tr>';
+            return;
+        }
+
+        try {
+            const user = await apiService.getUserById(userId);
+            console.log('User details fetched:', user);
+            if (!user) {
+                throw new Error('User data is empty');
+            }
+
+            let detailsHTML = `
+                    <tr><td>ID</td><td>${user.id}</td></tr>
+                    <tr><td>Username</td><td>${user.username}</td></tr>
+                    <tr><td>Email</td><td>${user.email}</td></tr>
+                    <tr><td>Role</td><td>${user.role}</td></tr>
+                `;
+
+            if (user.role === 'client') {
+                detailsHTML += `
+                        <tr><td>Wedding Date</td><td>${user.weddingDate || 'N/A'}</td></tr>
+                        <tr><td>Partner's Name</td><td>${user.partnerName || 'N/A'}</td></tr>
+                    `;
+            } else {
+                detailsHTML += `
+                        <tr><td>Admin Level</td><td>${user.adminLevel || 'N/A'}</td></tr>
+                    `;
+            }
+
+            document.getElementById('userDetails').innerHTML = detailsHTML;
+
+            // Set up button event listeners
+            document.getElementById('editUserBtn').addEventListener('click', () => {
+                // Implement edit functionality
+                alert('Edit functionality would be implemented here');
+            });
+
+            document.getElementById('deleteUserBtn').addEventListener('click', () => {
+                if (confirm('Are you sure you want to delete this user?')) {
+                    // Implement delete functionality
+                    alert('User would be deleted here');
+                    window.location.href = 'register.html';
+                }
+            });
+
+        } catch (error) {
+            console.error('Error loading user details:', error);
+            document.getElementById('userDetails').innerHTML = `<tr><td colspan="2">Failed to load user details: ${error.message}</td></tr>`;
+        }
+    }
+
+    window.onload = loadUserDetails;
+</script>
+</body>
+</html>
