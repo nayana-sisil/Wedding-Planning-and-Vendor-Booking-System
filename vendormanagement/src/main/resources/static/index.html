@@ -20,6 +20,12 @@
     <h1>🌸 Wedding Vendor Management</h1>
 
     <form id="vendorForm">
+        <select id="vendorType" onchange="toggleVendorTypeFields()" required>
+            <option value="" disabled selected>Select Vendor Type</option>
+            <option value="local">Local Vendor</option>
+            <option value="external">External Vendor</option>
+        </select>
+
         <input type="number" id="id" placeholder="Vendor ID (positive only)" required min="0" />
         <input type="text" id="name" placeholder="Vendor Name (letters only)" required />
         <select id="type" required>
@@ -30,6 +36,10 @@
         </select>
         <input type="number" id="rate" placeholder="Service Rate (e.g. 2500, 5000...)" min="2500" step="2500" required />
         <input type="text" id="contact" placeholder="Contact (phone or email)" required />
+
+        <input type="text" id="district" placeholder="District (Local Vendor Only)" class="vendor-optional" style="display:none;" />
+        <input type="text" id="country" placeholder="Country (External Vendor Only)" class="vendor-optional" style="display:none;" />
+        <input type="number" id="travelCost" placeholder="Travel Cost (External Vendor Only)" class="vendor-optional" style="display:none;" />
 
         <div class="buttons">
             <button type="button" onclick="addVendor()">➕ Add</button>
@@ -56,5 +66,13 @@
 <div id="alertBox" class="alert hidden"></div>
 
 <script src="script.js"></script>
+<script>
+    function toggleVendorTypeFields() {
+        const type = document.getElementById('vendorType').value;
+        document.getElementById('district').style.display = type === 'local' ? 'block' : 'none';
+        document.getElementById('country').style.display = type === 'external' ? 'block' : 'none';
+        document.getElementById('travelCost').style.display = type === 'external' ? 'block' : 'none';
+    }
+</script>
 </body>
 </html>
