@@ -1,0 +1,7 @@
+com\vendor\vendormanagement\model\Vendor.class
+com\vendor\vendormanagement\controller\VendorController.class
+com\vendor\vendormanagement\model\ExternalVendor.class
+com\vendor\vendormanagement\repository\VendorRepository.class
+com\vendor\vendormanagement\VendormanagementApplication.class
+com\vendor\vendormanagement\model\LocalVendor.class
+com\vendor\vendormanagement\service\VendorService.class

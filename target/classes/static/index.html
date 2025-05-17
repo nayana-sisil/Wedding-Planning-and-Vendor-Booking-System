@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Vendor Management - Futuristic UI</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+<div class="container glass">
+    <h1>🌸 Wedding Vendor Management</h1>
+
+    <form id="vendorForm">
+        <input type="number" id="id" placeholder="Vendor ID (positive only)" required min="0" />
+        <input type="text" id="name" placeholder="Vendor Name (letters only)" required />
+        <select id="type" required>
+            <option value="" disabled selected>Select Service Type</option>
+            <option value="Catering">Catering</option>
+            <option value="Photography">Photography</option>
+            <option value="Music">Music</option>
+        </select>
+        <input type="number" id="rate" placeholder="Service Rate (e.g. 2500, 5000...)" min="2500" step="2500" required />
+        <input type="text" id="contact" placeholder="Contact (phone or email)" required />
+
+        <div class="buttons">
+            <button type="button" onclick="addVendor()">➕ Add</button>
+            <button type="button" onclick="openModal('edit')">✏️ Edit</button>
+            <button type="button" onclick="openModal('delete')">❌ Delete</button>
+            <button type="button" onclick="openModal('search')">🔍 Search</button>
+            <button type="button" onclick="listVendors()">📋 List All</button>
+        </div>
+    </form>
+
+    <div id="vendorList"></div>
+</div>
+
+<!-- Modal for Edit/Delete/Search -->
+<div id="modal" class="modal hidden">
+    <div class="modal-content glass">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2 id="modalTitle">Action</h2>
+        <div id="modalBody"></div>
+    </div>
+</div>
+
+<!-- Alert box -->
+<div id="alertBox" class="alert hidden"></div>
+
+<script src="script.js"></script>
+</body>
+</html>

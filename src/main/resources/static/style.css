@@ -1,0 +1,199 @@
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #1f1c2c, #928dab);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    overflow: hidden;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 30%, rgba(0,255,255,0.1), transparent 40%),
+    radial-gradient(circle at 70% 70%, rgba(255,0,255,0.1), transparent 40%);
+    animation: moveBackground 20s linear infinite;
+    z-index: 0;
+}
+
+@keyframes moveBackground {
+    0% { transform: translate(0, 0); }
+    50% { transform: translate(-20%, -10%); }
+    100% { transform: translate(0, 0); }
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    padding: 30px;
+    border-radius: 20px;
+    width: 95%;
+    max-width: 600px;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: fadeIn 1s ease-in-out;
+}
+
+.glass {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    text-shadow: 0 0 8px #fff;
+}
+
+form input,
+form select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 12px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    transition: 0.3s ease;
+    box-shadow: 0 0 5px rgba(255,255,255,0.1);
+}
+
+form input:focus,
+form select:focus {
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 15px #00f0ff;
+}
+
+form select option {
+    color: #000;
+    background: #fff;
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: space-between;
+}
+
+button {
+    flex: 1 1 30%;
+    background: linear-gradient(145deg, #00f0ff, #00c0ff);
+    border: none;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: bold;
+    color: #000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 12px #00f0ff;
+}
+
+button:hover {
+    background: linear-gradient(145deg, #00e6ff, #00b8d4);
+    box-shadow: 0 0 25px #00f0ff, 0 0 35px #00e6ff;
+    transform: scale(1.05);
+}
+
+#vendorList {
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.12);
+    padding: 15px;
+    border-radius: 12px;
+    max-height: 250px;
+    overflow-y: auto;
+    color: #fff;
+    box-shadow: inset 0 0 10px rgba(255,255,255,0.1);
+}
+
+/* Alert */
+.alert {
+    background: #4CAF50;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 15px;
+    border-radius: 12px;
+    z-index: 1000;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.3s ease-in-out;
+    animation: fadeOut 3s forwards;
+    box-shadow: 0 0 10px rgba(0,255,0,0.5);
+}
+
+.alert.hidden {
+    opacity: 0;
+    display: none;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    backdrop-filter: blur(12px);
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: linear-gradient(145deg, #2e2c3a, #3b3a4d);
+    color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 25px #00f0ff;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.modal-content input,
+.modal-content select {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.12);
+    border: none;
+    color: white;
+}
+
+.modal-content select option {
+    color: black;
+    background: white;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; top: 0; }
+}
