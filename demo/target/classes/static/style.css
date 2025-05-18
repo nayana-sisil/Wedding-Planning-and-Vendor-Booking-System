@@ -97,18 +97,20 @@ h2 {
     padding: 0.8rem 1.5rem;
     background: #c06c84;
     color: #fff;
-    border: none;
+    border: 1px solid #a54b67;
     border-radius: 8px;
     font-size: 1rem;
     cursor: pointer;
     transition: background 0.3s ease, transform 0.1s ease;
     margin: 0.5rem;
     text-decoration: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .btn:hover {
     background: #a54b67;
     transform: translateY(-2px);
+    opacity: 1;
 }
 
 table {
@@ -135,6 +137,8 @@ td {
 .edit-btn {
     background: #6d8299;
     margin-right: 0.5rem;
+    border: 1px solid #5a6d82;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .edit-btn:hover {
@@ -143,6 +147,8 @@ td {
 
 .delete-btn {
     background: #d9534f;
+    border: 1px solid #c9302c;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .delete-btn:hover {
