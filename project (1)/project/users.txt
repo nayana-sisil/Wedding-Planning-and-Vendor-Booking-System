@@ -1,0 +1,9 @@
+[ {
+  "id" : 1,
+  "name" : "nayana",
+  "email" : "nayanasisil@gmail.com",
+  "password" : "nokia",
+  "phone" : "0768609939",
+  "address" : "temple road",
+  "preferences" : ""
+} ]

@@ -1,0 +1,19 @@
+[ {
+  "id" : 1,
+  "weddingId" : 2,
+  "vendorId" : 2,
+  "bookingDate" : null,
+  "serviceDate" : null,
+  "cost" : 0.0,
+  "status" : null,
+  "notes" : null
+}, {
+  "id" : 2,
+  "weddingId" : 1,
+  "vendorId" : 1,
+  "bookingDate" : null,
+  "serviceDate" : null,
+  "cost" : 0.0,
+  "status" : null,
+  "notes" : null
+} ]
