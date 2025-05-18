@@ -1,0 +1,8 @@
+[ {
+  "id" : 2,
+  "clientId" : 34,
+  "vendorId" : 34,
+  "rating" : 3,
+  "comment" : "ASdfhk",
+  "reviewDate" : "2025-05-14"
+} ]

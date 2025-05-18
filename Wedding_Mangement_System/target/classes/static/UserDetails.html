@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>User Details</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+          background-image: url('background.jpg');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+<div class="container glass">
+    <h1>👤 User Details</h1>
+
+    <div id="vendorList">
+        <table id="userDetails" style="width:100%;">
+            <!-- Will be filled by JS -->
+        </table>
+    </div>
+
+    <div class="buttons">
+        <button id="editUserBtn">✏️ Edit</button>
+        <button id="deleteUserBtn">🗑️ Delete</button>
+        <a href="index.html"><button type="button">⬅️ Back</button></a>
+    </div>
+</div>
+
+<script>
+    async function loadUserDetails() {
+        const params = new URLSearchParams(window.location.search);
+        const userId = parseInt(params.get('id'));
+        const editMode = params.get('edit') === "true";
+
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        const user = users.find(u => u.id === userId);
+        if (!user) {
+            document.getElementById("userDetails").innerHTML = "<tr><td colspan='2'>User not found.</td></tr>";
+            return;
+        }
+
+        if (editMode) {
+            document.getElementById("userDetails").innerHTML = `
+                <tr><td>Username</td><td><input type="text" id="editUsername" value="${user.username}"></td></tr>
+                <tr><td>Email</td><td><input type="email" id="editEmail" value="${user.email}"></td></tr>
+                <tr><td>Password</td><td><input type="password" id="editPassword" value="${user.password}"></td></tr>
+                <tr><td>Role</td><td>${user.role}</td></tr>
+                ${user.role === 'client' ? `
+                    <tr><td>Wedding Date</td><td><input type="date" id="editWeddingDate" value="${user.weddingDate}"></td></tr>
+                    <tr><td>Partner's Name</td><td><input type="text" id="editPartnerName" value="${user.partnerName}"></td></tr>
+                ` : `
+                    <tr><td>Admin Level</td><td><input type="text" id="editAdminLevel" value="${user.adminLevel}"></td></tr>
+                `}
+            `;
+
+            document.getElementById("editUserBtn").innerText = "💾 Save";
+            document.getElementById("editUserBtn").onclick = function () {
+                user.username = document.getElementById("editUsername").value.trim();
+                user.email = document.getElementById("editEmail").value.trim();
+                user.password = document.getElementById("editPassword").value.trim();
+                if (user.role === "client") {
+                    user.weddingDate = document.getElementById("editWeddingDate").value;
+                    user.partnerName = document.getElementById("editPartnerName").value.trim();
+                } else {
+                    user.adminLevel = document.getElementById("editAdminLevel").value.trim();
+                }
+
+                const index = users.findIndex(u => u.id === user.id);
+                users[index] = user;
+                localStorage.setItem("users", JSON.stringify(users));
+                alert("User updated!");
+                window.location.href = "index.html";
+            };
+        } else {
+            let detailsHTML = `
+                <tr><td>ID</td><td>${user.id}</td></tr>
+                <tr><td>Username</td><td>${user.username}</td></tr>
+                <tr><td>Email</td><td>${user.email}</td></tr>
+                <tr><td>Role</td><td>${user.role}</td></tr>
+            `;
+
+            if (user.role === "client") {
+                detailsHTML += `<tr><td>Wedding Date</td><td>${user.weddingDate}</td></tr>
+                                <tr><td>Partner's Name</td><td>${user.partnerName}</td></tr>`;
+            } else {
+                detailsHTML += `<tr><td>Admin Level</td><td>${user.adminLevel}</td></tr>`;
+            }
+
+            document.getElementById("userDetails").innerHTML = detailsHTML;
+
+            document.getElementById("editUserBtn").onclick = () => {
+                window.location.href = `UserDetails.html?id=${user.id}&edit=true`;
+            };
+        }
+
+        document.getElementById("deleteUserBtn").addEventListener("click", () => {
+            if (confirm("Are you sure?")) {
+                const remaining = users.filter(u => u.id !== user.id);
+                localStorage.setItem("users", JSON.stringify(remaining));
+                alert("User deleted.");
+                window.location.href = "index.html";
+            }
+        });
+    }
+
+    window.onload = loadUserDetails;
+</script>
+</body>
+</html>

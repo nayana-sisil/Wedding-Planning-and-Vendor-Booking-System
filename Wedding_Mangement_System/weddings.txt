@@ -1,0 +1,25 @@
+[ {
+  "clientId" : 1,
+  "groomName" : "c",
+  "brideName" : "d",
+  "weddingDate" : "2025-04-30",
+  "guestCount" : 3
+}, {
+  "clientId" : 2,
+  "groomName" : "cc",
+  "brideName" : "dd",
+  "weddingDate" : "2025-05-08",
+  "guestCount" : 45
+}, {
+  "clientId" : 1,
+  "groomName" : "c",
+  "brideName" : "d",
+  "weddingDate" : "2025-04-30",
+  "guestCount" : 35
+}, {
+  "clientId" : 2,
+  "groomName" : "cc",
+  "brideName" : "ddff",
+  "weddingDate" : "2025-05-08",
+  "guestCount" : 45
+} ]

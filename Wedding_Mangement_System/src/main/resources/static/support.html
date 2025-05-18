@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Customer Support Portal</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+          background-image: url('background.jpg');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+<div class="container glass">
+    <h1>📞 Customer Support Portal</h1>
+    <p style="text-align:center;">Submit and view support requests with ease</p>
+
+    <section class="form-section">
+        <h2>📝 Submit a Request</h2>
+        <form id="supportForm">
+            <input type="text" id="customerName" placeholder="Your Name" required />
+
+            <select id="type" required>
+                <option value="">Select Type</option>
+                <option value="Technical">Technical</option>
+                <option value="Billing">Billing</option>
+            </select>
+
+            <textarea id="message" placeholder="Describe your issue..." rows="4" required></textarea>
+
+            <div class="buttons">
+                <button type="submit">📤 Submit</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="list-section">
+        <h2>📂 Support Requests</h2>
+        <div id="supportList"></div>
+    </section>
+</div>
+
+<script src="supportscript.js"></script>
+</body>
+</html>

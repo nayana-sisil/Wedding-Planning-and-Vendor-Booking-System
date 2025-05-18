@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Register - Wedding Planner</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+          background-image: url('background.jpg');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+<div class="container glass">
+    <h1>📝 Register New User</h1>
+
+    <form id="registerForm">
+        <select id="userType" required>
+            <option value="" disabled selected>Select User Type</option>
+            <option value="client">Client</option>
+            <option value="admin">Admin</option>
+        </select>
+
+        <input type="text" id="username" placeholder="Username" required />
+        <input type="email" id="email" placeholder="Email" required />
+        <input type="password" id="password" placeholder="Password" required />
+
+        <!-- Client-specific -->
+        <input type="date" id="weddingDate" placeholder="Wedding Date" class="user-role client" style="display:none;" />
+        <input type="text" id="partnerName" placeholder="Partner's Name" class="user-role client" style="display:none;" />
+
+        <!-- Admin-specific -->
+        <input type="text" id="adminLevel" placeholder="Admin Level" class="user-role admin" style="display:none;" />
+
+        <div class="buttons">
+            <button type="submit">✅ Register</button>
+            <a href="index.html"><button type="button">🔙 Login</button></a>
+        </div>
+    </form>
+
+    <div id="vendorList" style="margin-top: 20px; display: none;">
+        <h3>🎉 Registration Successful!</h3>
+        <table id="userDetails" style="width: 100%"></table>
+        <div class="buttons" style="margin-top: 10px;">
+            <button id="newRegistrationBtn">🆕 New Registration</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('userType').addEventListener('change', function () {
+      const type = this.value;
+      document.querySelectorAll('.user-role').forEach(el => el.style.display = 'none');
+      document.querySelectorAll(`.user-role.${type}`).forEach(el => el.style.display = 'block');
+    });
+
+    document.getElementById("registerForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const userType = document.getElementById("userType").value;
+      const username = document.getElementById("username").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const weddingDate = document.getElementById("weddingDate").value;
+      const partnerName = document.getElementById("partnerName").value.trim();
+      const adminLevel = document.getElementById("adminLevel").value.trim();
+
+      if (!userType || !username || !email || !password) {
+        alert("Please fill all required fields.");
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+
+      const newUser = {
+        id: Date.now(),
+        role: userType,
+        username,
+        email,
+        password,
+        weddingDate: userType === "client" ? weddingDate : null,
+        partnerName: userType === "client" ? partnerName : null,
+        adminLevel: userType === "admin" ? adminLevel : null
+      };
+
+      users.push(newUser);
+      localStorage.setItem("users", JSON.stringify(users));
+      localStorage.setItem("loggedInUser", JSON.stringify(newUser));
+
+      // Show user details
+      let html = `
+        <tr><td>Type</td><td>${userType}</td></tr>
+        <tr><td>Username</td><td>${username}</td></tr>
+        <tr><td>Email</td><td>${email}</td></tr>
+      `;
+      if (userType === 'client') {
+        html += `<tr><td>Wedding Date</td><td>${weddingDate}</td></tr>
+                 <tr><td>Partner Name</td><td>${partnerName}</td></tr>`;
+      } else {
+        html += `<tr><td>Admin Level</td><td>${adminLevel}</td></tr>`;
+      }
+
+      document.getElementById("userDetails").innerHTML = html;
+      document.getElementById("registerForm").style.display = "none";
+      document.getElementById("vendorList").style.display = "block";
+    });
+
+    document.getElementById("newRegistrationBtn").addEventListener("click", function () {
+      document.getElementById("vendorList").style.display = "none";
+      document.getElementById("registerForm").reset();
+      document.querySelectorAll('.user-role').forEach(el => el.style.display = 'none');
+      document.getElementById("registerForm").style.display = "block";
+    });
+</script>
+</body>
+</html>

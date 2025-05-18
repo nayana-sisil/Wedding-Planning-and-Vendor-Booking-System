@@ -1,0 +1,19 @@
+[ {
+  "id" : 1,
+  "weddingId" : 23,
+  "vendorId" : 2,
+  "bookingDate" : "2025-05-29",
+  "serviceDate" : "2025-05-20",
+  "cost" : 7.6543676E7,
+  "status" : "Pending",
+  "notes" : ""
+}, {
+  "id" : 2,
+  "weddingId" : 54,
+  "vendorId" : 874,
+  "bookingDate" : "2025-05-23",
+  "serviceDate" : "2025-05-23",
+  "cost" : 324534.0,
+  "status" : "Pending",
+  "notes" : ""
+} ]

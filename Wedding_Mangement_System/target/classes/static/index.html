@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Wedding Login - Futuristic</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+<div class="container glass">
+    <h1>💍 Wedding Login</h1>
+
+    <form id="loginForm">
+        <input type="email" id="loginEmail" placeholder="Email" required />
+        <input type="password" id="loginPassword" placeholder="Password" required />
+
+        <div class="buttons">
+            <button type="submit">🔐 Login</button>
+            <a href="userregister.html">
+                <button type="button">📝 Register</button>
+            </a>
+        </div>
+    </form>
+
+    <div id="vendorList">
+        <h3>📋 Registered Users</h3>
+        <table id="usersTable" style="width:100%; margin-top: 10px;">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Details</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<script src="userapi.js"></script>
+<script src="userauth.js"></script>
+<script src="users.js"></script>
+<script>
+    window.onload = function () {
+        if (typeof loadUsersTable === "function") {
+            loadUsersTable().catch(error => console.error('Failed to load users:', error));
+        } else {
+            console.warn("loadUsersTable function is not defined.");
+        }
+    };
+</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - Wedding Planner</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background-image: url('background.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      color: #00f0ff;
+    }
+    td {
+      background: rgba(255,255,255,0.05);
+    }
+  </style>
+</head>
+<body>
+<div class="container glass">
+  <h1>🔒 Admin Panel</h1>
+
+  <div class="buttons">
+    <button id="logoutBtn">🚪 Logout</button>
+  </div>
+
+  <div id="vendorList">
+    <table id="usersTable" style="width: 100%; margin-top: 20px;">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Details</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<script src="users.js"></script>
+<script>
+  window.onload = function () {
+    const loggedIn = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (!loggedIn || loggedIn.role !== "admin") {
+      alert("Access Denied");
+      window.location.href = "index.html";
+    } else {
+      if (typeof loadUsersTable === "function") {
+        loadUsersTable();
+      }
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", function () {
+       localStorage.removeItem("loggedInUser");
+       alert("You have been logged out.");
+       window.location.href = "index.html";
+    });
+  };
+</script>
+</body>
+</html>

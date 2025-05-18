@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Wedding Reservation - Futuristic</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+<div class="container glass">
+    <h1>💌 Wedding Reservation</h1>
+    <div class="buttons" style="margin-bottom: 20px;">
+        <button onclick="window.location.href=window.location.origin + '/weddingadmin.html'">🔐 Switch to Admin View</button>
+    </div>
+
+    <form id="weddingForm">
+        <input type="number" id="clientId" placeholder="Client ID" required />
+        <input type="text" id="groomName" placeholder="Groom Name" required />
+        <input type="text" id="brideName" placeholder="Bride Name" required />
+        <input type="date" id="weddingDate" required />
+        <input type="number" id="guestCount" placeholder="Number of Guests" required />
+
+        <div class="buttons">
+            <button type="submit">📨 Submit</button>
+            <button type="button" onclick="fetchWeddings()">📋 View All</button>
+        </div>
+    </form>
+
+    <div id="vendorList">
+        <h3>📅 Upcoming Weddings</h3>
+        <div id="weddingList"></div>
+    </div>
+</div>
+
+<script>
+    const weddingForm = document.getElementById("weddingForm");
+    const weddingList = document.getElementById("weddingList");
+
+    function fetchWeddings() {
+        fetch("/weddings")
+            .then(res => res.json())
+            .then(data => {
+                weddingList.innerHTML = "";
+                const isAdmin = window.location.pathname.includes("weddingadmin.html");
+
+                data.forEach(w => {
+                    const div = document.createElement("div");
+                    div.innerHTML = `
+                        <p><strong>ID:</strong> ${w.clientId} |
+                        <strong>Groom:</strong> ${w.groomName} |
+                        <strong>Bride:</strong> ${w.brideName} |
+                        <strong>Date:</strong> ${w.weddingDate} |
+                        <strong>Guests:</strong> ${w.guestCount}</p>
+                        ${isAdmin ? `
+                        <button onclick='editWedding(${JSON.stringify(w)})'>✏️ Update</button>
+                        <button onclick='deleteWedding(${w.clientId})'>❌ Delete</button>` : ''}
+                        <hr>`;
+                    weddingList.appendChild(div);
+                });
+            });
+    }
+
+    weddingForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const wedding = {
+            clientId: parseInt(document.getElementById("clientId").value),
+            groomName: document.getElementById("groomName").value,
+            brideName: document.getElementById("brideName").value,
+            weddingDate: document.getElementById("weddingDate").value,
+            guestCount: parseInt(document.getElementById("guestCount").value)
+        };
+
+        fetch("/weddings", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(wedding)
+        })
+        .then(res => {
+            if (res.ok) {
+                fetchWeddings();
+                weddingForm.reset();
+            }
+        });
+    });
+
+    fetchWeddings();
+</script>
+</body>
+</html>
