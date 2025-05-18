@@ -35,4 +35,46 @@ public class UserService {
                 .filter(u -> u.getId().equals(id))
                 .findFirst();
     }
+
+    public Optional<User> getUserByEmail(String email) {
+        return fileStorageUtil.readUsers().stream()
+                .filter(u -> u.getEmail().equals(email))
+                .findFirst();
+    }
+
+    public User updateUser(String id, User updatedUser) {
+        List<User> users = fileStorageUtil.readUsers();
+        Optional<User> existingUserOpt = users.stream()
+                .filter(u -> u.getId().equals(id))
+                .findFirst();
+
+        if (existingUserOpt.isEmpty()) {
+            throw new IllegalStateException("User not found with id: " + id);
+        }
+
+        User existingUser = existingUserOpt.get();
+        // Update user properties
+        existingUser.setUsername(updatedUser.getUsername());
+        existingUser.setEmail(updatedUser.getEmail());
+        existingUser.setPassword(updatedUser.getPassword());
+        existingUser.setRole(updatedUser.getRole());
+        existingUser.setWeddingDate(updatedUser.getWeddingDate());
+        existingUser.setPartnerName(updatedUser.getPartnerName());
+        existingUser.setAdminLevel(updatedUser.getAdminLevel());
+
+        // Save updated list
+        fileStorageUtil.writeUsers(users);
+        return existingUser;
+    }
+
+    public void deleteUser(String id) {
+        List<User> users = fileStorageUtil.readUsers();
+        boolean removed = users.removeIf(u -> u.getId().equals(id));
+
+        if (!removed) {
+            throw new IllegalStateException("User not found with id: " + id);
+        }
+
+        fileStorageUtil.writeUsers(users);
+    }
 }
