@@ -1,4 +1,4 @@
-const apiService = require('./api.js');
+// No need to require api.js as it's included in the HTML and creates a global apiService object
 
 async function loadUsersTable() {
     try {
@@ -38,7 +38,24 @@ async function editUser(userId) {
         const newUsername = prompt('Enter new username:', user.username);
         const newEmail = prompt('Enter new email:', user.email);
         const newPassword = prompt('Enter new password (leave blank to keep current):', '');
-        const updatedUser = { ...user, username: newUsername, email: newEmail, password: newPassword || user.password };
+
+        // Create a copy of the user object to avoid modifying the original
+        const updatedUser = { ...user };
+
+        // Update the basic properties
+        updatedUser.username = newUsername;
+        updatedUser.email = newEmail;
+        if (newPassword) {
+            updatedUser.password = newPassword;
+        }
+
+        // For client users, also prompt for partner name
+        if (user.role === 'client') {
+            const newPartnerName = prompt('Enter partner name:', user.partnerName || '');
+            if (newPartnerName) {
+                updatedUser.partnerName = newPartnerName;
+            }
+        }
 
         await apiService.updateUser(userId, updatedUser);
         alert('User updated successfully!');
@@ -60,9 +77,15 @@ async function deleteUser(userId) {
     }
 }
 
+// Make functions available globally
 window.loadUsersTable = loadUsersTable;
 window.editUser = editUser;
 window.deleteUser = deleteUser;
 
-// Load users when page loads
-window.onload = loadUsersTable;
+// Check if we're on a page with a users table and load it
+document.addEventListener('DOMContentLoaded', function() {
+    const usersTable = document.querySelector('#usersTable');
+    if (usersTable) {
+        loadUsersTable();
+    }
+});
