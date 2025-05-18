@@ -22,7 +22,7 @@
         <div class="overflow-x-auto">
             <table class="w-full border-none">
                 <tbody id="userDetails" class="[&>tr]:border-none [&>tr>td]:py-2 [&>tr>td:first-child]:text-right [&>tr>td:first-child]:pr-4 [&>tr>td:first-child]:font-medium [&>tr>td:first-child]:text-6d8299 [&>tr>td:last-child]:text-4a3c31">
-                <!-- Will be populated by JavaScript -->
+                
                 </tbody>
             </table>
         </div>
@@ -81,15 +81,15 @@
 
             document.getElementById('userDetails').innerHTML = detailsHTML;
 
-            // Set up button event listeners
+            
             document.getElementById('editUserBtn').addEventListener('click', () => {
-                // Implement edit functionality
+                
                 alert('Edit functionality would be implemented here');
             });
 
             document.getElementById('deleteUserBtn').addEventListener('click', () => {
                 if (confirm('Are you sure you want to delete this user?')) {
-                    // Implement delete functionality
+                   
                     alert('User would be deleted here');
                     window.location.href = 'register.html';
                 }
