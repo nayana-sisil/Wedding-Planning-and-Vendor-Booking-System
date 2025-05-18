@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wedding Planner - User Management</title>
+  <title>Wedding Planner - Booking Management</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="style.css">
@@ -13,43 +13,67 @@
   <div class="floral-decor floral-decor-left"></div>
   <div class="floral-decor floral-decor-right"></div>
   <h1 class="text-4xl font-playfair text-c06c84">Wedding Planner</h1>
-  <p class="text-lg text-6d8299">User Management</p>
+  <p class="text-lg text-6d8299">Booking Management</p>
   <a href="dashboard.html" class="btn absolute top-5 left-5">Back to Dashboard</a>
   <a href="index.html" class="btn absolute top-5 right-5">Logout</a>
 </header>
 <main class="flex justify-center items-center py-10 flex-col gap-8">
   <section class="bg-white bg-opacity-95 p-8 rounded-2xl shadow-xl max-w-4xl w-full border border-e6dede">
-    <h2 class="text-2xl font-playfair text-c06c84 mb-6 text-center">User Management</h2>
-    <p class="mb-6 text-center">Manage all users and their accounts here.</p>
-
+    <h2 class="text-2xl font-playfair text-c06c84 mb-6 text-center">Booking Management</h2>
+    <p class="mb-6 text-center">Manage all venue and vendor bookings here.</p>
+    
     <div class="overflow-x-auto">
-      <table class="w-full" id="usersTable">
+      <table class="w-full">
         <thead>
           <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Role</th>
+            <th>Booking ID</th>
+            <th>Wedding</th>
+            <th>Vendor/Venue</th>
+            <th>Date</th>
             <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <!-- Will be filled by JavaScript -->
           <tr>
-            <td>user1</td>
-            <td>user1@example.com</td>
-            <td>Client</td>
-            <td>Active</td>
+            <td>BK001</td>
+            <td>John & Sarah</td>
+            <td>Grand Hotel (Venue)</td>
+            <td>2023-12-15</td>
+            <td>Confirmed</td>
             <td>
               <button class="btn edit-btn">Edit</button>
               <button class="btn delete-btn">Delete</button>
             </td>
           </tr>
           <tr>
-            <td>user2</td>
-            <td>user2@example.com</td>
-            <td>Client</td>
-            <td>Active</td>
+            <td>BK002</td>
+            <td>John & Sarah</td>
+            <td>Elegant Catering</td>
+            <td>2023-12-15</td>
+            <td>Pending</td>
+            <td>
+              <button class="btn edit-btn">Edit</button>
+              <button class="btn delete-btn">Delete</button>
+            </td>
+          </tr>
+          <tr>
+            <td>BK003</td>
+            <td>Michael & Emily</td>
+            <td>Beach Resort (Venue)</td>
+            <td>2024-02-20</td>
+            <td>Confirmed</td>
+            <td>
+              <button class="btn edit-btn">Edit</button>
+              <button class="btn delete-btn">Delete</button>
+            </td>
+          </tr>
+          <tr>
+            <td>BK004</td>
+            <td>Michael & Emily</td>
+            <td>Dream Photography</td>
+            <td>2024-02-20</td>
+            <td>Confirmed</td>
             <td>
               <button class="btn edit-btn">Edit</button>
               <button class="btn delete-btn">Delete</button>
@@ -58,15 +82,14 @@
         </tbody>
       </table>
     </div>
-
+    
     <div class="mt-8 text-center">
-      <button class="btn">Add New User</button>
+      <button class="btn">Add New Booking</button>
     </div>
   </section>
 </main>
 <footer class="bg-white bg-opacity-90 shadow-inner text-center py-4 text-6d8299 text-sm">
   <p>Template by Wedding Planner Team | Licensed under CC BY 4.0</p>
 </footer>
-<script src="users.js"></script>
 </body>
 </html>
