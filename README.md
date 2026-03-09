@@ -10,7 +10,7 @@ The Wedding Planning and Vendor Booking System is a full-stack Spring Boot web a
 - View and manage vendors
 - Book services (e.g., venues, catering, photography)
 - Perform CRUD operations on vendors, bookings, and user data
-- Access a RESTful backend API for integration
+- Access a RESTful bac kend API for integration
 
 🧠 Features
 
